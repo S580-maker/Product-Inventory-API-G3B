@@ -33,7 +33,7 @@ To test this API on your own machine, follow these steps:
 Clone this repository:
 
 bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git clone https://github.com/S580-maker/Product-Inventory-API-G3B.git
 Navigate into the project folder:
 
 bash
