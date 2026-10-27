@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors('*'));
 
 //This is for linking the routes/productsRoutes to my file. 
-app.use('/api/products', productRoutes);
+app.use(productRoutes);
 
 // Error-handling middleware
 app.use((err, req, res, next) => {
