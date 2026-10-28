@@ -1,92 +1,119 @@
-# Group 3B Product Inventory API - Initial Setup
-markdown
-#  Product Inventory API - Group 3 (Subgroup 3B)
+# Product Inventory API
 
-A backend RESTful API built with **Node.js** and **Express.js** to manage a shop's product inventory. This project was built as part of the BeTechified Backend Development Group Project.
+A REST API for managing a small product inventory, built with Node.js and Express. This project was created by Group 3B as part of the BeTechified Backend Development project.
 
-##  Project Overview
-This API allows a user to perform full **CRUD (Create, Read, Update, Delete)** operations on a list of products. 
+## Features
 
-**Our Unique Approach (Subgroup 3B):**
-While other subgroups focused on different methods, our group implemented the **Organized Approach (Separation of Concerns)**. Instead of writing all the code in a single file, we structured our application into distinct folders for **Models**, **Controllers**, and **Routes**. This ensures our code is clean, scalable, and easy to maintain.
+- Create, list, retrieve, update, and delete products
+- Filter the product list by name or quantity
+- Organized into routes, controllers, and a model
+- Includes a Postman collection for trying the API
 
-**Important Note:** As strictly required by the project brief, this API does **NOT** use a database (like SQL or MongoDB). Data is temporarily stored in an in-memory JavaScript array (`let products = []`). When the server restarts, the data resets.
+> **Storage note:** Products are kept in an in-memory array, not a database. All products are cleared when the server restarts.
 
-##  Technologies Used
-*   **Node.js** (JavaScript runtime)
-*   **Express.js** (Web framework)
-*   **Postman** (API testing and documentation)
-*   **Git & GitHub** (Version control and team collaboration)
+## Requirements
 
-##Folder Structure
-Our code follows a professional directory structure:`text
-├── server.js              # Entry point (starts the server on Port 3001)
-├── models/
-│   └── productModel.js    # The "fake database" (in-memory array)
-├── controllers/
-│   └── productController.js # The CRUD logic (Create, Read, Update, Delete)
-└── routes/
-    └── productRoutes.js   # The API endpoints (URLs)
- How to Run Locally
-To test this API on your own machine, follow these steps:
+- [Node.js](https://nodejs.org/) and npm
+- [Postman](https://www.postman.com/) (optional, for testing the collection)
 
-Clone this repository:
+## Getting started
 
-bash
+Clone the repository and install dependencies:
+
+```bash
 git clone https://github.com/S580-maker/Product-Inventory-API-G3B.git
-Navigate into the project folder:
-
-bash
-cd YOUR_REPO_NAME
-Install the required dependencies:
-
-bash
+cd Product-Inventory-API-G3B
 npm install
+```
+
 Start the server:
 
-bash
-node server.js
-The server will run on: http://localhost:3001
+```bash
+npm start
+```
 
-API Endpoints
-Here are the endpoints available in this API:
+The API listens at `http://localhost:3001` by default. To use a different port, set the `PORT` environment variable before starting the server.
 
-Method	Endpoint	Description	Status Code
-GET	/api/products	Retrieve a list of all products	200 OK
-GET	/api/products/:id	Retrieve a single product by its ID	200 OK / 404 Not Found
-POST	/api/products	Add a new product to the inventory	201 Created
-PUT	/api/products/:id	Update an existing product's details	200 OK
-DELETE	/api/products/:id	Remove a product from the inventory	200 OK
-Example JSON Request Body (for POST/PUT)
-json
+## API endpoints
+
+All endpoints are under `/api/products`.
+
+| Method | Endpoint | Description | Success response |
+| --- | --- | --- | --- |
+| `GET` | `/api/products` | List all products | `200 OK` |
+| `GET` | `/api/products/:id` | Get a product by ID | `200 OK` |
+| `POST` | `/api/products` | Add a product | `201 Created` |
+| `PATCH` | `/api/products/:id` | Update supplied product fields | `200 OK` |
+| `DELETE` | `/api/products/:id` | Delete a product | `200 OK` |
+
+Requests for a product ID that does not exist return `404 Not Found`. Creating a product requires `name`, `price`, and `quantity`.
+
+### Product format
+
+```json
 {
   "name": "Wireless Mouse",
   "price": 25.99,
   "quantity": 50
 }
-Testing with Postman
-We have thoroughly tested every endpoint using Postman.
-To test it yourself:
+```
 
-Open Postman.
+### Examples
 
-Import the postman/3B-Product-Inventory.postman_collection.json file found in this repository.
+Create a product:
 
-Ensure your local server is running (node server.js).
+```bash
+curl -X POST http://localhost:3001/api/products \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Wireless Mouse","price":25.99,"quantity":50}'
+```
 
-Run the requests!
+List products, optionally filtered by name or quantity:
 
-Team & Roles (Subgroup 3B)
-This project was a collaborative effort. Here is how we divided the work to ensure everyone contributed:
+```text
+GET http://localhost:3001/api/products
+GET http://localhost:3001/api/products?name=mouse
+GET http://localhost:3001/api/products?quantity=50
+```
 
-[Your Name / GitHub Username]: Project Lead, Server Setup, & Testing (Role 5)
+Update a product (replace `1` with its ID):
 
-[Member 2 Name]: Product Model (Data)
+```bash
+curl -X PATCH http://localhost:3001/api/products/1 \
+  -H "Content-Type: application/json" \
+  -d '{"quantity":45}'
+```
 
-[Member 3 Name]: Routes (Endpoints)
+## Try it with Postman
 
-[Member 4 Name]: Controller (CRUD Logic)
+1. Start the server with `npm start`.
+2. In Postman, choose **Import** and select [`postman/3B-Product-Inventory.postman_collection.json`](postman/3B-Product-Inventory.postman_collection.json).
+3. Send **Create product** first. On success, the collection stores the returned product ID for the other requests.
+4. Try the list, get-by-ID, update, and delete requests.
 
-[Member 5 Name]: Documentation & Presentation
+The collection's default base URL is `http://localhost:3001`.
 
-Built for the BeTechified Backend Development Class.
+## Project structure
+
+```text
+.
+├── server.js                 # Express app and server startup
+├── routes/
+│   └── productRoutes.js      # Product API endpoints
+├── controllers/
+│   └── productController.js  # Request handling and responses
+├── models/
+│   └── productModel.js       # In-memory product data and operations
+└── postman/
+    └── 3B-Product-Inventory.postman_collection.json
+```
+
+## Contributors
+
+- [S580-maker (Stephen Obodai)](https://github.com/S580-maker)
+- [OfficePin001](https://github.com/OfficePin001)
+- [limah-coding-journey](https://github.com/limah-coding-journey)
+
+---
+
+Created for the BeTechified Backend Development project by Group 3B.
