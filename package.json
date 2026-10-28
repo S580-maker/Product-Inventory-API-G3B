@@ -1,0 +1,10 @@
+{
+  "name": "product-inventory-api-g3b",
+  "version": "1.0.0",
+  "description": "Team 3B Product Inventory API",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
