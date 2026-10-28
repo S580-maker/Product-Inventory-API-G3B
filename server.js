@@ -1,6 +1,6 @@
 //The group 3 project for server(engine)
 
-require('dotenv').config();
+//require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
