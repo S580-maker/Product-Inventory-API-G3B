@@ -1,14 +1,18 @@
 const productModel = require('../models/productModel');
 
 // 1. GET ALL PRODUCTS
-// We just ask the model for the array and send it back as JSON
+// We ask for the products and return it as a json , it also checks for if a query was issues and returns a corresponding json file 
 exports.getAllProducts = (req, res) => {
-    try {
-        const products = productModel.getAllProducts();
-        res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching products" });
+    let products = productModel.getAllProducts();
+    const { name, quantity } = req.query;
+
+    if (name) {
+        products = products.filter(p => p.name.toLowerCase().includes(name.toLowerCase()));
     }
+    if (quantity) {
+        products = products.filter(p => p.quantity === Number(quantity));
+    }
+    res.status(200).json(products);
 };
 
 // 2. GET PRODUCT BY ID
