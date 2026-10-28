@@ -23,6 +23,10 @@ app.use((err, req, res, next) => {
     });
 });
 
+// 404 Handler for unknown routes
+app.use((req, res) => {
+    res.status(404).json({ message: "Route not found. Please check your URL." });
+});
 //This starts the server
 const PORT = process.env.PORT || 3001;
 
